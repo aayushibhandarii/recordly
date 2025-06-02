@@ -1,0 +1,24 @@
+import React from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { auth, currentUser, } from '@clerk/nextjs/server'
+export default async function Navbar(){
+    const user = await currentUser();
+    if(!user){
+        return auth.protect();
+    }
+    return (
+    <header className='flex items-center px-10 py-5 border-b border-b-shadow '>
+      <div className='flex items-center justify-between max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 w-full'>
+        <Link href="/" className='flex space-x-1'>
+          <Image alt="logo" width={"32"} height="32" src={"/images/sample.png"} />
+          <h1 className='font-extrabold text-bold'>Recordly</h1>
+        </Link>
+        <Link href={"/profile"}>
+          <Image width={"32"} height="32" alt="logo" src={user.imageUrl} className='rounded-full'/>
+        </Link>
+      </div>
+      
+    </header>
+  )
+}
