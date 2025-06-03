@@ -1,0 +1,6 @@
+{
+  "databaseURL": "https://Aayushi-Bhandari-s-workspace-01q425.us-east-1.xata.sh/db/recordly",
+  "codegen": {
+    "output": "src/xata.ts"
+  }
+}
