@@ -10,7 +10,6 @@ export default async function ProfilePage(){
   const email = user.emailAddresses[0].emailAddress;
   const fname = user.firstName;
   const lname = user.lastName;
-  console.log(user)
     return(
         <>
             <Header subheading={email} heading={fname+" "+lname} userprofile={user.imageUrl} />

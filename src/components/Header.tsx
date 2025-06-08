@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { AlignRight, Search, Upload, Video } from 'lucide-react'
-import Navbar from './Navbar'
+import Link from 'next/link'
 function Header(
   {userprofile,heading,subheading}:
   {
@@ -10,7 +10,6 @@ function Header(
 }) {
   return(
     <>
-      <Navbar />
       <div className='max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 mt-10'>
       <div className='flex justify-between mb-5'>
           <div className='flex items-center space-x-2'>
@@ -25,10 +24,10 @@ function Header(
           </div>
           <div className='flex space-x-4 '>
             <div>
-              <button className='flex items-center text-[13px] space-x-1 border-1 border-shadow rounded-2xl py-1.5 px-4'>
+              <Link href={"/upload"}className='flex items-center text-[13px] space-x-1 border-1 border-shadow rounded-2xl py-1.5 px-4' >
                 <Upload size={15} />
                 <span>Upload a video</span>
-              </button>
+              </Link>
             </div>
             <div>
               <button className='flex items-center text-[13px] space-x-1 rounded-2xl py-1.5 px-4 text-white bg-brown'>

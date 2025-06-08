@@ -19,18 +19,21 @@
   --color-gray : #6C6685;
   --color-bold : #2C325D;
   --color-textcolor : #212121;
+  --color-brown-dark: #392f25;
   --color-brown : #4C3F31;
+  --color-brown-light : #815f3a;
   --color-orange : #FE6247;
   --color-orange-10 : #F7E5D1;
   --color-cardcolor : #F0EDE0;
   --color-shadow : #D7D5DD;
+  --shadow-form : 0px 4px 30px 0px rgb(0,0,0,0.1);
   --shadow-10 : 0px 0.5px 0px 0px rgb(0,0,0,0.1);
   --shadow-card  : 0px 4px 30px 0px rgb(0,0,0,0.1),0px 6px 30px 0px rgb(0,0,0,0.1);
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
+  color: var(--color-textcolor);
   font-family: Arial, Helvetica, sans-serif;
 }
 option:checked{
@@ -42,4 +45,24 @@ option{
 }
 option:hover{
   background-color: #F7E5D1;
+}
+@layer components{
+  .form-field{
+    label{
+      color: var(--color-gray);
+      font-size: small;
+    }
+    input,textarea,select{
+      background-color: white;
+      border-radius: 16px;
+      padding: 8px;
+      margin-top: 5px;
+      @apply focus:outline-[#392f25]
+    }
+
+    input::placeholder,textarea::placeholder{
+      color: var(--color-gray);
+      font-size: small;
+    }
+  }
 }
