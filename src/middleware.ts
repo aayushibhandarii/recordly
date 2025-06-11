@@ -1,8 +1,22 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
-const isPublicRoute = createRouteMatcher(["/sign-in(.*)","/sign-up(.*)","/api/users(.*)"]);
+import { aj } from './app/api/arcjet/route';
+import {detectBot, shield, } from '@arcjet/next';
+const isProtectedRoute = createRouteMatcher(["/api/clerk"])
+;
+
+//only allowing bots searchengine and googlecrawler and not allowing others
+const validate = aj
+      .withRule(shield({mode : "LIVE"}))
+      .withRule(detectBot({mode:"LIVE",allow : ['CATEGORY:SEARCH_ENGINE',"GOOGLE_CRAWLER"]}))
+
 export default clerkMiddleware(async (auth,req)=>{
-  if(!isPublicRoute(req)){
-      auth.protect();
+  const decision = await validate.protect(req);
+  console.log(decision)
+  if(decision.isDenied()){
+    throw new Error("Forbidden")
+  }
+  if(isProtectedRoute(req)){
+     await auth.protect();
   }
 });
 export const config = {

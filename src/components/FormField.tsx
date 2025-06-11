@@ -13,7 +13,7 @@ export default function FormField({
     options? : {label:string,value:string}[]
 }){
     return(
-        <div className="form-field flex flex-col ">
+        <div className="form-field">
             <label htmlFor={id}>{label}</label>
             {as==="input"?
             <input type={type} name={id} placeholder={placeholder} value={value} onChange={onChange}/>:
