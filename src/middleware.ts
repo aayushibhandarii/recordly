@@ -4,7 +4,7 @@ import {detectBot, shield, } from '@arcjet/next';
 const isProtectedRoute = createRouteMatcher(["/api/clerk"])
 ;
 
-//only allowing bots searchengine and googlecrawler and not allowing others
+//only allowing bots search engine , google crawler and not allowing others
 const validate = aj
       .withRule(shield({mode : "LIVE"}))
       .withRule(detectBot({mode:"LIVE",allow : ['CATEGORY:SEARCH_ENGINE',"GOOGLE_CRAWLER"]}))

@@ -22,6 +22,7 @@ export const uploaded_videos = pgTable("uploaded_videos",{
     description : text("description").notNull(),
     transcript : json(),
     visibility : text("visibility").$type<"public" | "private">().notNull(),
+    videoId : text("videoId").notNull(),
     createdAt:timestamp().defaultNow().notNull(),
     updatedAt:timestamp().defaultNow().notNull()
 })

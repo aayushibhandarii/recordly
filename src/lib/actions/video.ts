@@ -1,5 +1,4 @@
 "use server";
-
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { buildVideoWithUserQuery, getOrderByClause, withErrorHandling } from "../utils";
 import { transcribeVideo } from "./transcribeAction";
@@ -20,7 +19,7 @@ export const validateWithArcjet = async (fingerprint : string) =>{
         fixedWindow({
             mode : "LIVE",
             window : "1m",
-            max : 1,
+            max : 2,
             characteristics : ["fingerprint"]
         })
     )
@@ -39,7 +38,8 @@ export const saveVideoDetails = withErrorHandling(async (
         description,
         visibility ,
         duration,
-        videoName
+        videoName,
+        videoId
     }
     :
     {
@@ -49,7 +49,9 @@ export const saveVideoDetails = withErrorHandling(async (
         description : string,
         visibility : "public" | "private",
         duration? : number | null,
-        videoName : string
+        videoName : string,
+        videoId : string
+        
     })=>{
         const {userId} = await auth(); //getting userid from clerk
         
@@ -73,6 +75,7 @@ export const saveVideoDetails = withErrorHandling(async (
             duration : duration ? duration : 0,
             visibility : visibility,
             transcript : data.error ? null:JSON.stringify(data.words),
+            videoId : videoId,
             createdAt : new Date(),
             updatedAt : new Date()
         }).returning({id : uploaded_videos.id});
@@ -85,8 +88,6 @@ export const saveVideoDetails = withErrorHandling(async (
         }
     
 })
-
-
 
 export const getAllVideos = withErrorHandling(async(
     searchQuery : string="",
@@ -105,7 +106,10 @@ export const getAllVideos = withErrorHandling(async(
     const whereCondition = searchQuery.trim()
         ? and(
             videoToShownToUser,
-            ilike(uploaded_videos.title,`%${searchQuery}%`),
+            ilike(
+                sql`REPLACE(REPLACE(REPLACE(LOWER(${uploaded_videos.title}),'-',''),'.',''),' ','')`,
+                `%${searchQuery.replace(/[-. ]/g,"").toLowerCase()}%`
+            ),
         ):videoToShownToUser;
     
     const [{totalCount}] = await db

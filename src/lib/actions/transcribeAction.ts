@@ -1,3 +1,4 @@
+"use server";
 import { withErrorHandling } from "../utils";
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const headers = {
@@ -18,10 +19,12 @@ export const transcribeVideo = withErrorHandling( async(videoUrl : string)=>{
 
     let data = await getTranscript(result.id);
     console.log(data);
-    while(data.status=="processing"){
+    let count = 0;
+    while(count < 5 && data.status=="processing"){
         await sleep(3000);
         data = await getTranscript(result.id);
         console.log(data.status);
+        count++;
     }
 
     if(data.error){

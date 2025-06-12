@@ -8,7 +8,7 @@ export default async function Layout({children}:{children : React.ReactNode}){
     }
     return(
             <div className="w-full h-screen">
-                <Navbar imageUrl={user.imageUrl}/>
+                <Navbar imageUrl={user.imageUrl} userId={user.id} />
                 {children}
             </div>
         

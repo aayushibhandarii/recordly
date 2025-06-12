@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
       {
         protocol : "https",
         hostname : "images.clerk.dev"
+      },
+      {
+        protocol : "https",
+        hostname : "9j5tn8viar.ufs.sh"
       }
     ]
   }

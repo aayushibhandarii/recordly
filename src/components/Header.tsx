@@ -4,7 +4,7 @@ import Link from 'next/link'
 function Header(
   {userprofile,heading,subheading}:
   {
-    userprofile? : string,
+    userprofile : string | null,
     heading : string,
     subheading : string
 }) {

@@ -29,7 +29,7 @@
   --color-cardcolor : #F0EDE0;
   --color-shadow : #D7D5DD;
   --shadow-form : 0px 4px 30px 0px rgb(0,0,0,0.1);
-  --shadow-10 : 0px 0.5px 0px 0px rgb(0,0,0,0.1);
+  --shadow-10 : 0px 0px 10px 2px rgb(0,0,0,0.1);
   --shadow-card  : 0px 4px 30px 0px rgb(0,0,0,0.1),0px 6px 30px 0px rgb(0,0,0,0.1);
 }
 
@@ -65,7 +65,7 @@ button {
   }
   
   .empty-state{
-    @apply flex flex-col items-center text-center w-full bg-white rounded-2xl p-6 gap-2;
+    @apply flex flex-col items-center text-center w-full bg-white rounded-2xl p-6 gap-2 shadow-10 border border-shadow;
 
     h1{
       @apply font-bold text-2xl

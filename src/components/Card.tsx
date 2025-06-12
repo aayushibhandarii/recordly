@@ -5,19 +5,19 @@ export default function Card(
     {id,duration,createdAt,title,views,thumbnail,username,userprofile
 
     }:{
-        id:number,
+        id:string,
         duration: number,
         createdAt : Date,
         title : string,
         views : number,
         thumbnail : string,
         username? : string,
-        userprofile? : string
+        userprofile : string|undefined |null
 }){
     return(
         <Link href={`/video/${id}`} className='flex flex-col rounded-2xl border border-gray-20 shadow-card w-full aspect-[16/9] bg-cardcolor'>
-            <div className="bg-amber-300 relative w-full rounded-t-2xl object-cover h-[190px]">
-                Image
+            <div className="bg-amber-300 relative w-full rounded-t-2xl object-cover h-[250px] md:h-[200px] lg:h-[150px]">
+                <Image alt="Thumbnail" src={thumbnail} className='w-full rounded-t-2xl object-cover ' fill/>
                 <div className='absolute top-0 right-0 flex flex-col gap-2'>
                     <button  className='link bg-white rounded-full p-1.5'>
                         <Link2 size={20}/>
@@ -35,7 +35,7 @@ export default function Card(
                 <div className='flex justify-between '>
                     <div className='flex justify-center items-center space-x-2'>
                         <div className='rounded-full'>
-                            <Image alt="logo" width={"30"} height="30" src={"/images/sample.png"}/>
+                            {userprofile && <Image alt="logo" width={"30"} height="30" src={userprofile} className='rounded-full'/>}
                         </div>
                         
                         <div className='text-[13px]'>
