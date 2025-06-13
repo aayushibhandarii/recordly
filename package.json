@@ -24,7 +24,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "svix": "^1.66.0",
-    "uploadthing": "^7.7.2"
+    "uploadthing": "^7.7.2",
+    "use-debounce": "^10.0.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

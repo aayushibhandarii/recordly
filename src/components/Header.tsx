@@ -1,7 +1,9 @@
 import Image from 'next/image'
-import { AlignRight, Search, Upload } from 'lucide-react'
+import { AlignRight,Upload } from 'lucide-react'
 import Link from 'next/link'
 import RecordScreen from './RecordScreen'
+import HeaderSelect from './HeaderSelect'
+import HeaderSearch from './HeaderSearch'
 function Header(
   {userprofile,heading,subheading}:
   {
@@ -34,19 +36,11 @@ function Header(
           </div>
         </div>
         <div className='flex justify-between'>
-          <form className='flex-1 flex max-w-xl bg-white rounded-2xl p-2 text-gray space-x-1 text-[13px]'>
-            <Search size={20}/>
-            <input className="w-full focus:outline-none" placeholder='Search for prople, tags, folders, Spaces, and Looms'/>
-          </form>
+          <HeaderSearch />
           <div className='flex flex-none space-x-1 items-center bg-white rounded-2xl p-2'>
             <div className='flex items-center max-w-fit'>
               <AlignRight size={13} />
-              <select name="viewtime" id="viewtime" className='text-[13px]'>
-                <option value={"Most viewed"}>Most viewed</option>
-                <option value={"Most recent"}>Most recent</option>
-                <option value={"Oldest first"}>Oldest first</option>
-                <option value={"Least viewed"}>Least viewed</option>
-              </select>
+              <HeaderSelect />
             </div>
           </div>
         </div>

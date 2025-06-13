@@ -19,6 +19,7 @@ export const withErrorHandling = <T,A extends unknown[]>(
 }
 
 export const getOrderByClause = (filter? : string)=>{
+    console.log(filter);
     switch (filter) {
         case "Most Viewed" :
             return sql`${uploaded_videos.views} DESC`
