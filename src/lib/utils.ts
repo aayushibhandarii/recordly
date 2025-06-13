@@ -1,3 +1,4 @@
+
 import { sql ,eq} from "drizzle-orm";
 import { uploaded_videos, users } from "../../drizzle/schema";
 import { db } from "../../drizzle/db";
@@ -45,12 +46,6 @@ export const getVideoDetails = async (videoId:string)=>{
     .where(eq(uploaded_videos.id,videoId))
     return video;
 }
-export const getUserVideo = async (userId:string)=>{
-    const video = await buildVideoWithUserQuery()
-    .where(eq(users.id,userId))
-    
-    return {videos : video};
-}
 
 export const createIFrameLink = (videoId : string)=>
     `https://9j5tn8viar.ufs.sh/f/${videoId}?autoplay=true&preload=true`
@@ -76,8 +71,4 @@ export type userProps ={
     image: string | null;
 
 }
-export const getUserDetails = async (userId : string)=>{
-    const [{user}] = await buildVideoWithUserQuery()
-    .where(eq(users.id,userId))
-    return user;
-}
+

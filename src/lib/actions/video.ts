@@ -2,12 +2,12 @@
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { buildVideoWithUserQuery, getOrderByClause, withErrorHandling } from "../utils";
 import { transcribeVideo } from "./transcribeAction";
-import { uploaded_videos} from "../../../drizzle/schema";
+import { uploaded_videos, users} from "../../../drizzle/schema";
 import { db } from "../../../drizzle/db";
 import { revalidatePath } from "next/cache";
 import { aj } from "@/app/api/arcjet/route";
 import { fixedWindow, request } from "@arcjet/next";
-import { and, eq, ilike, or, sql } from "drizzle-orm";
+import { and, desc, eq, ilike, or, sql, SQLWrapper } from "drizzle-orm";
 
 const revalidatePaths = (paths : string[])=>{
     paths.forEach((path)=>revalidatePath(path));
@@ -88,7 +88,37 @@ export const saveVideoDetails = withErrorHandling(async (
         }
     
 })
+export const getUserVideo = withErrorHandling(async(
+    userId : string,
+    searchQuery : string = "",
+    sortFilter ? : string
+)=>{
+    const currentUserId = (await auth()).userId;
+    const isOwner = userId ===currentUserId;
 
+    const [userInfo] = await db.select({
+        id:users.id,
+        name: users.name,
+        image : users.image,
+        email : users.email
+    }).from(users)
+    .where (eq(users.id,userId))
+    if(!userInfo) throw new Error("user not found");
+
+    const conditions = [
+        eq(uploaded_videos.userId,userId),
+        !isOwner && eq(uploaded_videos.visibility,"public"),
+        searchQuery.trim() && ilike(uploaded_videos.title,`%${searchQuery}%`)
+    ].filter(Boolean) as SQLWrapper[]; // !isOwner && eq(uploaded_videos.visibility,"public") as user visiting someone else profile
+
+    const userVideos = await buildVideoWithUserQuery()
+    .where(and(...conditions))
+    .orderBy(
+        sortFilter ? getOrderByClause(sortFilter) : desc(uploaded_videos.createdAt)
+    );
+
+    return {user : userInfo,videos:userVideos,count : userVideos.length};
+})
 export const getAllVideos = withErrorHandling(async(
     searchQuery : string="",
     sortFilter? : string,

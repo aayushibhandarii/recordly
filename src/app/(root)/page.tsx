@@ -20,7 +20,8 @@ const page = async(
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10'>
               {
                 videos.map((video)=>{
-                  return <Card key={video.video.id} id={video.video.id} duration={video.video.duration || 0} createdAt={video.video.createdAt} title={video.video.title} views={video.video.views} thumbnail={video.video.thumbnail_url} username={video.user?.name} userprofile={video.user?.image} / >
+                  return <
+                    Card key={video.video.id} id={video.video.id} duration={video.video.duration || 0} createdAt={video.video.createdAt} title={video.video.title} views={video.video.views} thumbnail={video.video.thumbnail_url} username={video.user?.name} userprofile={video.user?.image} visibility={video.video.visibility}/ >
                 })
               }
             </div>

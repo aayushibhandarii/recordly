@@ -1,6 +1,7 @@
 import Image from 'next/image'
-import { AlignRight, Search, Upload, Video } from 'lucide-react'
+import { AlignRight, Search, Upload } from 'lucide-react'
 import Link from 'next/link'
+import RecordScreen from './RecordScreen'
 function Header(
   {userprofile,heading,subheading}:
   {
@@ -29,12 +30,7 @@ function Header(
                 <span>Upload a video</span>
               </Link>
             </div>
-            <div>
-              <button className='flex items-center text-[13px] space-x-1 rounded-2xl py-1.5 px-4 text-white bg-brown'>
-                <Video size={15} />
-                <span>Record a video</span>
-              </button>
-            </div>
+            <RecordScreen />
           </div>
         </div>
         <div className='flex justify-between'>

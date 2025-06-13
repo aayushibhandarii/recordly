@@ -29,7 +29,39 @@ export default function Upload(){
             setVideoDuration(video.duration);
         }
     },[video.duration]);
+    useEffect(()=>{
+        const checkForRecordedVideo = async()=>{
+                try{
+                    const stored = sessionStorage.getItem("recordedVideo");
+                    if(!stored) return;
 
+                    const {url,name,type,duration} = JSON.parse(stored);
+                    const blob = await fetch(url).then((res)=>res.blob());
+                    const file = new File([blob],name,{type,lastModified : Date.now()})
+
+                    if(video.inputRef.current){
+                        const dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(file);
+                        video.inputRef.current.files = dataTransfer.files;
+
+                        const event = new Event("change",{bubbles : true});
+                        video.inputRef.current.dispatchEvent(event);
+
+                        video.handleFileChange({
+                            target : {files : dataTransfer.files}
+                        } as ChangeEvent<HTMLInputElement>);
+                    }
+                    if(duration){
+                        setVideoDuration(duration);
+                    }
+                    sessionStorage.removeItem("recordedVideo");
+                    URL.revokeObjectURL(url);
+                }catch (e){
+                        console.error(e,"Error loading recorded video");
+                }
+        }
+        checkForRecordedVideo()
+    },[video])
     const { startUpload } = useUploadThing("mediaUploader", {
         onClientUploadComplete: () => {
         alert("uploaded successfully!");
@@ -83,7 +115,8 @@ export default function Upload(){
                 thumbnailUrl : thumbnail_upload_url,
                 ...formData,
                 duration : videoDuration,
-                videoId
+                videoId,
+                visibility : formData.visibility
             }) 
             if(!result.success){
                 throw new Error("Error ocurred while savving to database");
@@ -99,7 +132,7 @@ export default function Upload(){
         }
     }
     
-    const handleInputChange = (e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
+    const handleInputChange = (e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>)=>{
         const {name,value} = e.target; //name is the one that is get modified like title or description or visibility and value is the new value
         setFormData((prevFormData)=>{
             return{

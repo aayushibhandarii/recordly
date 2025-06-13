@@ -1,8 +1,8 @@
-import { ChevronDown, Ellipsis, Eye, Link2 } from 'lucide-react'
+import {Ellipsis, Eye, Link2 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 export default function Card(
-    {id,duration,createdAt,title,views,thumbnail,username,userprofile
+    {id,duration,createdAt,title,views,thumbnail,username,userprofile,visibility
 
     }:{
         id:string,
@@ -12,7 +12,8 @@ export default function Card(
         views : number,
         thumbnail : string,
         username? : string,
-        userprofile : string|undefined |null
+        userprofile : string|undefined |null,
+        visibility : "public" | "private"
 }){
     return(
         <Link href={`/video/${id}`} className='flex flex-col rounded-2xl border border-gray-20 shadow-card w-full aspect-[16/9] bg-cardcolor'>
@@ -41,8 +42,7 @@ export default function Card(
                         <div className='text-[13px]'>
                             <span className='font-bold'>{username} </span>
                             <div className='flex items-center'>
-                                <span className='text-gray'>Not Shared</span>
-                                <ChevronDown size={15}/>
+                                <span className='text-gray'>{visibility}</span>
                             </div>
                         </div>
                     </div>

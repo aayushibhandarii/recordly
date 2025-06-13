@@ -29,7 +29,7 @@ export default function Navbar(
 
             </button>
           </figure>
-          <Link href={``}>
+          <Link href={`/profile/${userId}`}>
             <Image width={"32"} height="32" alt="logo" src={imageUrl} className='rounded-full'/>
           </Link>
           <SignOutButton>

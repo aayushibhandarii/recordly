@@ -8,7 +8,7 @@ export default function FormField({
     type?:string,
     value:string,
     as?:string,
-    onChange : (e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>void
+    onChange : (e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>)=>void
     placeholder? : string,
     options? : {label:string,value:string}[]
 }){
@@ -19,7 +19,7 @@ export default function FormField({
             <input type={type} name={id} placeholder={placeholder} value={value} onChange={onChange}/>:
             as==="textarea"?
             <textarea placeholder={placeholder} cols={50} name={id} value={value} onChange={onChange}/>
-            :<select name={id} >
+            :<select name={id} onChange={onChange}>
                 {
                     options?.map((o)=><option key={o.value} value={o.value}>{o.label}</option>)
                 }
